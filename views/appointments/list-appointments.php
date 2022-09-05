@@ -1,5 +1,6 @@
+
 <div id="content-wrapper" class="d-flex flex-column">
-    <h1 class="text-primary mb-5">Liste des rendez-vous</h1>
+    <h1 class="h2 mx-3 text-primary mb-3">Liste des rendez-vous</h1>
     
 
     <?php
@@ -11,7 +12,7 @@
         
     <?php } ?>
 
-    <table class="table table-striped">
+    <table class="mx-3 table table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>

@@ -15,10 +15,9 @@ class Patient
     private object $pdo;
 
     /**
-     * Méthode appelée automatiquement lors de l'instanciation de la classe
+     * Constructeur appelé automatiquement à l'instanciation
      */
     public function __construct() {
-        // hydratation de l'attribut $pdo grâce à la méthode statique "getInstance" et contenant notre objet PDO
         $this->pdo = Database::getInstance();
     }
 
@@ -132,7 +131,7 @@ class Patient
 
     /**
      * 
-     * Méthode permettant de vérifier si un email est présent en bdd
+     * Vérifie si un email est présent en bdd
      * 
      * @param string $mail
      * 
@@ -156,7 +155,7 @@ class Patient
     }
 
     /**
-     * Méthode qui permet de créer un patient
+     * Crée un patient
      * 
      * @return boolean
      */
@@ -187,11 +186,11 @@ class Patient
     }
 
     /**
-     * Méthode statique qui permet de lister tous les patients existants
+     * Liste tous les patients existants
      * 
      * @return array
      */
-    public static function getAll(): array // Méthode statique car il est inutile d'instancier, car pas d'hydratation
+    public static function getAll()
     {
         try {
             // On stocke une instance de la classe PDO dans une variable
@@ -213,12 +212,42 @@ class Patient
 
 
     /**
+     * Liste tous les patients existants
      * 
-     * Méthode permettant de récupérer toutes les données du patient
+     * @return array
+     */
+    public static function getPerPage($premier, $perPage, $pointVirgule = ';')
+    {
+        try {
+            // var_dump($premier, $perPage);die;
+            // On stocke une instance de la classe PDO dans une variable
+            $pdo = Database::getInstance();
+            // On créé la requête
+            $sql = "SELECT * FROM `patients`
+                    LIMIT :premier, :perPage
+                    $pointVirgule";     
+
+            // On exécute la requête
+            $sth = $pdo->prepare($sql);
+            // On affecte chaque valeur à chaque marqueur nominatif
+            $sth->bindValue(':premier', $premier, PDO::PARAM_INT);
+            $sth->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+            if($sth->execute()){
+            return $sth->fetchAll(PDO::FETCH_OBJ);
+            } else return false;
+
+        } catch (PDOException $ex) {
+            //var_dump($ex);
+            return [];
+        }
+    }
+
+
+    /**
+     * 
+     * Récupère toutes les données du patient
      * @param int $id
-     * 
      * @return mixed
-     * Retourne un objet issu de la class Patient ou false
      */
     public static function get(int $id): mixed
     {
@@ -288,4 +317,111 @@ class Patient
             return false;
         }
     }
+    
+    
+    /**
+     * Compte le nombre de patients 
+     * 
+     * @param
+     * 
+     * @return
+     */
+
+    public static function getCount()
+    {
+        try {
+            $pdo = Database::getInstance();
+            $sql = 'SELECT count(*) AS `count` FROM `patients`;';
+            $sth = $pdo->prepare($sql);
+            $sth->execute();
+            $count = $sth->fetch();
+            return $count;
+            // var_dump($count);die;
+        } catch (PDOException $ex) {
+            //var_dump($ex);
+            return false;
+        }
+    }
+
+    public function getCountOfAnnouncements($type, $category, $search){
+        try {
+            if(!empty($type) || !empty($category) || !empty($search)){
+                $conditions = null;
+                if(!empty($type)){
+                    $conditions = array();
+                    array_push($conditions, "`id_type_of_announcement` = :type");
+                }
+                if(!empty($category)){
+                    $conditions ? '' : $conditions = array();
+                    array_push($conditions, "`id_category` = :category");
+                }
+                if(!empty($conditions)){
+                    $conditions = ' WHERE ' . implode(' AND ', $conditions);
+                }
+                if(!empty($search)){
+                    $searchVal = ' AND `announcements`.`announcement_description` LIKE :search;';
+                }
+            }
+
+            $conditions = $conditions ?? '';
+            $searchVal = $searchVal ?? '';
+            $pdo = Database::dbConnect();
+            $sql = "SELECT COUNT(*) AS nb_articles 
+                    FROM `announcements` 
+                    INNER JOIN `users` 
+                    ON `announcements`.`id_user` = `users`.`id_user`
+                    $conditions
+                    $searchVal";
+            $stmt = $pdo->prepare($sql);
+            if(!empty($type)){
+                $stmt->bindValue(':type', $type, PDO::PARAM_INT);
+            }
+            if(!empty($category)){
+                $stmt->bindValue(':category', $category, PDO::PARAM_INT);
+            }
+            if(!empty($search)){
+                $stmt->bindValue(':search', "%".$search."%", PDO::PARAM_STR);
+            }
+            if ($stmt->execute()) {
+                $result = $stmt->fetch(PDO::FETCH_OBJ);
+                return $result;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo 'erreur dans la requête' . $e->getMessage();
+        }
+    }
+
+
+    /**
+     * Liste tous les patients depuis le champs de recherche
+     * 
+     * @return array
+     */
+    public static function search(?string $search = '')
+    {
+        try {
+            // On stocke une instance de la classe PDO dans une variable
+            $pdo = Database::getInstance();
+            // On créé la requête
+            $sql = "SELECT `firstname`, `lastname`,`birthdate`, `phone`, `mail`, `id` 
+            FROM `patients` 
+            WHERE((`lastname` LIKE :search) OR (`firstname` LIKE :search) OR (`mail` LIKE :search));";
+            $sth = $pdo->prepare($sql);
+            $sth->bindValue(':search', '%' . $search . '%',PDO::PARAM_STR);
+            $sth->execute();
+
+            // On exécute la requêt
+            return $sth->fetchAll();
+            
+            
+        } catch (PDOException $ex) {
+            //var_dump($ex);
+            return [];
+        }
+    }
+    
 }
+
+

@@ -127,6 +127,8 @@ $appointments = Appointment::getAll($id);
 /* ************* AFFICHAGE DES VUES **************************/
 
 include(__DIR__ . '/../views/templates/header.php');
+include(__DIR__ . '/../views/templates/nav.php'); 
+
     include(__DIR__ . '/../views/patients/form-patient.php');
     include(__DIR__ . '/../views/appointments/list-appointments.php');
 include(__DIR__ . '/../views/templates/footer.php');

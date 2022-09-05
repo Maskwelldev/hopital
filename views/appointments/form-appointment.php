@@ -17,13 +17,14 @@
                 <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>?id=<?= $id ?? '' ?>" novalidate>
 
                     <div class="form-floating mb-4">
-                        <input type="date" class="form-control" id="date" name="date" value="<?= isset($appointmentObj) ? date('Y-m-d', strtotime($appointmentObj->dateHour)) : '' ?>" required>
                         <label for="date" class="form-label">Date*</label>
+                        <input type="date" class="form-control" id="date" name="date" value="<?= isset($appointmentObj) ? date('Y-m-d', strtotime($appointmentObj->dateHour)) : '' ?>" required>
                         <div class="error"><?= $errors['date_error'] ?? '' ?></div>
                     </div>
                                 
 
                     <div class="form-floating mb-4">
+                        <label for="hour" class="form-label">Heure*</label>
                         <select class="form-select" name="hour" id="hour" required>
                             <?php
                             for ($i = 3; $i <= 20; $i++) {
@@ -32,11 +33,11 @@
                             }
                             ?>
                         </select>
-                        <label for="hour" class="form-label">Heure*</label>
                     </div>
 
                     <div class="form-floating mb-4">
                         
+                        <label for="min" class="form-label">Minutes*</label>
                         <select class="form-select" name="min" id="min" required>
                             <?php
                             for ($i = 0; $i <= 45; $i += 15) {
@@ -45,10 +46,10 @@
                             }
                             ?>
                         </select>
-                        <label for="min" class="form-label">Minutes*</label>
                     </div>
 
                     <div class="form-floating mb-4">
+                        <label for="idPatients" class="form-label">Patient*</label>
                         <select class="form-select col-4" name="idPatients" id="idPatients" required>
                             <?php
                             foreach ($allPatients as $patient) {
@@ -57,7 +58,6 @@
                             } ?>
 
                         </select>
-                        <label for="idPatients" class="form-label">Patient*</label>
                         <div class="error"><?= $errors['idPatients_error'] ?? '' ?></div>
                     </div>
 

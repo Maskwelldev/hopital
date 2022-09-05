@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../models/Appointment.php');
 require_once(__DIR__ . '/../config/regexp.php');
 
 // Nettoyage de l'id du rdv passé en GET dans l'url
-$id = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
+$id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 /*************************************************************/
 
 // Appel à la méthode statique permettant de récupérer toutes les infos d'un rdv

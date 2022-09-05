@@ -61,7 +61,7 @@ class Appointment
     {
 
         try {
-            $sql = 'INSERT INTO `appointments` (`dateHour`, `idPatients`) 
+            $sql = 'INSERT INTO `appointments` (`dateHour`, `idPatient`) 
                     VALUES (:dateHour, :idPatients)';
             $sth = $this->pdo->prepare($sql);
 
@@ -108,7 +108,7 @@ class Appointment
      * 
      * @return object
      */
-    public static function get(int $id): object
+    public static function get(int $id)
     {
 
         try {
@@ -151,7 +151,7 @@ class Appointment
             $sql = '    SELECT `appointments`.`id` as `appointmentId`, `patients`.`id` as `patientId`, `patients`.*, `appointments`.* 
                         FROM `appointments` 
                         INNER JOIN `patients`
-                        ON `appointments`.`idPatients` = `patients`.`id`
+                        ON `appointments`.`idPatient` = `patients`.`id`
                         ORDER BY `appointments`.`dateHour` DESC
                         ;';
             $sth = $pdo->query($sql);
@@ -167,4 +167,33 @@ class Appointment
             return [];
         }
     }
+
+    /**
+     * Liste tous les patients depuis le champs de recherche
+     * 
+     * @return array
+     */
+    public static function search(?string $search = '')
+    {
+        try {
+            // On stocke une instance de la classe PDO dans une variable
+            $pdo = Database::getInstance();
+            // On créé la requête
+            $sql = "SELECT * FROM `patients` 
+            INNER JOIN `appointments` ON `patients`.id = `appointments`.idPatient
+            WHERE((`lastname` LIKE :search) OR (`firstname` LIKE :search) OR (`mail` LIKE :search));";
+            $sth = $pdo->prepare($sql);
+            $sth->bindValue(':search', '%' . $search . '%',PDO::PARAM_STR);
+            $sth->execute();
+
+            // On exécute la requêt
+            return $sth->fetchAll();
+            
+            
+        } catch (PDOException $ex) {
+            //var_dump($ex);
+            return [];
+        }
+    }
+    
 }
