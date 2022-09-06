@@ -1,3 +1,5 @@
+<!-- Main Content -->
+<div id="content">
 <!-- Affichage d'un message d'erreur personnalisé -->
 <?php if (isset($errors['global'])) { ?>
 
@@ -12,7 +14,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-10">
-            <h1 class="text-primary mb-5"><?= (isset($id)) ? 'Modifier' : 'Ajouter' ?> un rdv</h1>
+            <h1 class="h2 text-primary mb-5"><?= (isset($id)) ? 'Modifier' : 'Ajouter' ?> un rdv</h1>
             <!-- On peut ajouter un attribut 'novalidate' dans la balise form pour désactiver temporairement tous les required et pattern -->
             <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>?id=<?= $id ?? '' ?>" novalidate>
                 <div class="form-floating mb-4">
@@ -33,7 +35,7 @@
                         <?php
                         foreach ($allDoctors as $doctor) {
                             $state = isset($appointmentObj) && ($doctor->id == $appointmentObj->idDoctor) ? "selected" : "";
-                            echo '<option value="' . $doctor->id . '" ' .  $state  . '>' . $doctor->lastname . ' ' . $doctor->firstname . '</option>';
+                            echo '<option value="' . $doctor->id . '" ' .  $state  . '>' . $doctor->lname . ' ' . $doctor->fname . '</option>';
                         } ?>
 
                     </select>

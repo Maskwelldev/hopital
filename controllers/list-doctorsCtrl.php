@@ -16,7 +16,7 @@ if(isset($_GET['page']) && !empty($_GET['page'])){
 }
 
 if($result = Doctor::getCountAll()){
-    // var_dump($result->count);die;
+
 
 $nbArticles = $result->count;
 // Détermine le nombre d'articles par page

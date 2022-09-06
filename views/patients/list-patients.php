@@ -8,7 +8,7 @@
     </div>
 
 <?php } else { ?>
-    <h1 class="h2 mx-3 text-primary mb-3">Liste des patients</h1>
+    <h1 class="h2 text-primary mb-3">Liste des patients</h1>
 
     <?php
     if(SessionFlash::checkMessage()){
@@ -20,13 +20,14 @@
     <?php } ?>
 
     
-    <table class="mx-3 table table-striped">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Prénom</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Date de naissance</th>
                 <th scope="col">Email</th>
+                <th scope="col">Téléphone</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -37,13 +38,14 @@
             ?>
             <tr>
                 <td><?=htmlentities($result->firstname)?></td>
-                <td><?=htmlentities($result->lastname)?></td>
+                <td><?=htmlentities(substr($result->lastname, 0, 14))?></td>
                 <td><?=htmlentities(date('d.m.Y', strtotime($result->birthdate)))?></td>
                 <td><a href="mailto:<?=htmlentities($result->mail)?>"><?=htmlentities($result->mail)?></a></td>
+                <td><a href="mailto:<?=htmlentities($result->phone)?>"><?=htmlentities($result->phone)?></a></td>
                 <td>
                     <a href="/controllers/edit-patientCtrl.php?id=<?=htmlentities($result->id)?>"><i
-                            class="far fa-edit"></i></a>
-                    <a href="/controllers/delete-patientCtrl.php?id=<?=$result->id?>"><i class="fas fa-trash fs-5"></i></a>
+                            class="far fa-edit mr-3"></i></a>
+                    <a href="/controllers/delete-patientCtrl.php?id=<?=$result->id?>"><i class="fas fa-trash ml-3 fs-5"></i></a>
                 </td>
             </tr>
             <?php } ?>

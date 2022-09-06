@@ -1,7 +1,8 @@
 <?php
-require_once(__DIR__ . '/../models/Patient.php');
-require_once(__DIR__ . '/../models/Appointment.php');
-require_once(__DIR__ . '/../config/regexp.php');
+include(__DIR__ . '/../config/regexp.php');
+include(__DIR__ . '/../models/Patient.php');
+include(__DIR__ . '/../models/Appointment.php');
+include(__DIR__ . '/../models/Doctor.php');
 
 // Nettoyage de l'id du rdv passé en GET dans l'url
 $id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
@@ -10,6 +11,7 @@ $id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 // Appel à la méthode statique permettant de récupérer toutes les infos d'un rdv
 $appointmentObj = Appointment::get($id);
 
+
 // Si $appointmentObj est false,
 // on stocke un message d'erreur à afficher dans la vue
 if ($appointmentObj === false) {
@@ -17,6 +19,8 @@ if ($appointmentObj === false) {
 } else {
     // Appel à la méthode statique permettant de récupérer tous les patients pour le select
     $allPatients = Patient::getAll();
+    $allDoctors = Doctor::getAll();
+
     /*************************************************************/
 
     //On ne controle que s'il y a des données envoyées 
@@ -51,9 +55,14 @@ if ($appointmentObj === false) {
         // ***************************************************************
 
         $idPatients = intval(trim(filter_input(INPUT_POST, 'idPatients', FILTER_SANITIZE_NUMBER_INT)));
-        //On test si le champ n'est pas vide
-        if ($idPatients == 0) {
-            $errors['idPatients_error'] = ERRORS[2];
+    //On test si le champ est vide
+    if($idPatients==0){
+        $errors['dateHour_error'] = 'Le champ est obligatoire';
+    }
+    $idDoctor = intval(trim(filter_input(INPUT_POST, 'idDoctor', FILTER_SANITIZE_NUMBER_INT)));
+    //On test si le champ est vide
+    if($idDoctor==0){
+        $errors['dateHour_error'] = 'Le champ est obligatoire';
         }
 
         // Si il n'y a pas d'erreurs, on met à jour le rdv.
@@ -62,6 +71,7 @@ if ($appointmentObj === false) {
             $appointment = new Appointment();
             $appointment->setDateHour($dateHour);
             $appointment->setIdPatients($idPatients);
+        $appointment->setIdDoctor($idDoctor);
 
             // Si la réponse de la méthode update est false,
             // on stocke un message d'erreur à afficher dans la vue

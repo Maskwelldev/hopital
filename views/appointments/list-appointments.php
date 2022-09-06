@@ -1,6 +1,8 @@
+<!-- Main Content -->
+<div id="content">
 
 <div id="content-wrapper" class="d-flex flex-column">
-    <h1 class="h2 mx-3 text-primary mb-3">Liste des rendez-vous</h1>
+    <h1 class="h2 text-primary mb-3">Liste des rendez-vous</h1>
     
 
     <?php
@@ -12,14 +14,15 @@
         
     <?php } ?>
 
-    <table class="mx-3 table table-striped">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">Heure</th>
-                <th scope="col">Nom Prénom</th>
-                <th scope="col">Phone</th>
+                <th scope="col">Patient</th>
+                <th scope="col">Docteur</th>
+                <th scope="col">Service</th>
                 <th scope="col" class="text-center">Actions</th>
             </tr>
         </thead>
@@ -34,8 +37,9 @@
                     <th scope="row"><?= $i ?></th>
                     <td><?= date('d.m.Y', strtotime($appointment->dateHour)) ?></td>
                     <td><?= date('H:i', strtotime($appointment->dateHour)) ?></td>
-                    <td><?= htmlentities($appointment->lastname) ?> <?= htmlentities($appointment->firstname) ?></td>
-                    <td><a href="tel:<?= htmlentities($appointment->phone) ?>"><?= htmlentities($appointment->phone) ?></a></td>
+                    <td><?= htmlentities($appointment->lastname . ' ' . substr($appointment->firstname, 0, 1) . '.')?></td>
+                    <td><?= htmlentities($appointment->lname) ?></td>
+                    <td><?= htmlentities($appointment->name) ?></td>
                     <td class="text-center">
                         <a href="/controllers/edit-appointmentCtrl.php?id=<?= $appointment->id ?>"><i class="fas fa-edit fs-5"></i></a>
                         <a href="/controllers/delete-appointmentCtrl.php?id=<?= $appointment->id?>"><i class="fas fa-trash fs-5"></i></a>

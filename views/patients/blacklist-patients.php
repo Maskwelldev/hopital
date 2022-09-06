@@ -8,7 +8,7 @@
     </div>
 
 <?php } else { ?>
-    <h1 class="h2 mx-3 text-primary mb-3">Liste noire</h1>
+    <h1 class="h2 text-primary mb-3">Liste noire</h1>
 
     <?php
     if(SessionFlash::checkMessage()){
@@ -20,7 +20,7 @@
     <?php } ?>
 
     
-    <table class="mx-3 table table-striped">
+    <table class="px-auto table table-striped table-dark">
         <thead>
             <tr>
                 <th scope="col">Prénom</th>

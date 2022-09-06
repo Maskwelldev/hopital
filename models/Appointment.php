@@ -161,10 +161,14 @@ class Appointment
         $pdo = Database::getInstance();
 
         try {
-            $sql = '    SELECT `appointments`.`id` as `appointmentId`, `patients`.`id` as `patientId`, `patients`.*, `appointments`.* 
+            $sql = 'SELECT * 
                         FROM `appointments` 
                         INNER JOIN `patients`
                         ON `appointments`.`idPatient` = `patients`.`id`
+                        INNER JOIN `doctors`
+                        ON `appointments`.`idDoctor` = `doctors`.`id`
+                        INNER JOIN `specialities`
+                        ON `doctors`.`idSpeciality` = `specialities`.`id`
                         ORDER BY `appointments`.`dateHour` DESC
                         ;';
             $sth = $pdo->query($sql);
@@ -180,7 +184,7 @@ class Appointment
             return [];
         }
     }
-
+    
 
     /**
      * Méthode qui permet de lister les deux prochains rendez-vous
@@ -196,6 +200,8 @@ class Appointment
             $sql = 'SELECT * FROM `appointments` 
                     INNER JOIN `patients`
                     ON `appointments`.`idPatient` = `patients`.`id`
+                    INNER JOIN `doctors`
+                    ON `appointments`.`idDoctor` = `doctors`.`id`
                     ORDER BY `appointments`.`dateHour` DESC
                     LIMIT 2;';
             $sth = $pdo->query($sql);

@@ -8,7 +8,7 @@
     </div>
 
 <?php } else { ?>
-    <h1 class="h2 mx-3 text-primary mb-3">Liste des patients</h1>
+    <h1 class="h2 text-primary mb-3">Liste des médecins</h1>
 
     <?php
     if(SessionFlash::checkMessage()){
@@ -20,7 +20,7 @@
     <?php } ?>
 
     
-    <table class="mx-3 table table-striped">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Prénom</th>
@@ -36,10 +36,11 @@
         foreach($results as $result) {
             ?>
             <tr>
-                <td><?=htmlentities($result->firstname)?></td>
-                <td><?=htmlentities($result->lastname)?></td>
+                <td><?=htmlentities($result->lname)?></td>
+                <td><?=htmlentities($result->fname)?></td>
                 <td><?=htmlentities($result->name)?></td>
                 <td><a href="mailto:<?=htmlentities($result->mail)?>"><?=htmlentities($result->mail)?></a></td>
+                <td><a href="tel:<?=htmlentities($result->phone)?>"><?=htmlentities($result->phone)?></td>
                 <td>
                     <a href="/controllers/edit-patientCtrl.php?id=<?=htmlentities($result->id)?>"><i
                             class="far fa-edit"></i></a>

@@ -45,16 +45,16 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card cardHovered border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Docteurs</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $countDoctors->count ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-600"><?= $countDoctors->count ?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="hoverIcn fas fa-users fa-2x text-gray-300"></i>
+                                            <i class="hoverIcn fas fa-hand-holding-medical fa-2x text-gray-600"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -63,16 +63,16 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card cardHovered border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Patients</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $countPatients->count ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-600"><?= $countPatients->count ?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-hand-holding-medical fa-2x text-gray-300"></i>
+                                            <i class="hoverIcn fas fa-users fa-2x text-gray-600"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card cardHovered border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
@@ -89,7 +89,7 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">87%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-600">87%</div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
@@ -99,7 +99,7 @@
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="hoverIcn fas fa-clipboard-list fa-2x text-gray-600"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -108,16 +108,16 @@
 
                         <!-- Pending Requests Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card cardHovered border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Dossiers à clôturer</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-600">12</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-folder fa-2x text-gray-300"></i>
+                                            <i class="hoverIcn fas fa-folder fa-2x text-gray-600"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -156,9 +156,9 @@
                                         <div class="card" style="">
                                             <div class="card-body">
                                                 <h5 class="card-title"><?=$appointment->lastname . ' ' . $appointment->firstname ?></h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">Dr. Mallard</h6>
+                                                <h6 class="card-subtitle mb-2 text-muted">Dr. <?=$appointment->lname?></h6>
                                                 <p class="card-text"><?=$appointment->dateHour?></p>
-                                                <a href="/controllers/edit-appointmentCtrl.php?id=<?= $appointment->id ?>" class="card-link">Modifier patient</a>
+                                                <a href="/controllers/edit-appointmentCtrl.php?id=<?= $appointment->id ?>" class="card-link text-warning">Modifier le rendez-vous</a>
                                                 <a href="tel:<?=$appointment->phone?>" class="card-link">Appeler</a>
                                             </div>
                                         </div>
