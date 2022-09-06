@@ -7,6 +7,7 @@ class Appointment
     private int $id;
     private string $dateHour;
     private int $idPatients;
+    private int $idDoctor;
 
     private object $pdo;
 
@@ -41,6 +42,16 @@ class Appointment
         return $this->idPatients;
     }
 
+    public function setIdDoctor(int $idDoctor): void
+    {
+        $this->idDoctor = $idDoctor;
+    }
+
+    public function getIdDoctor(): int
+    {
+        return $this->idDoctor;
+    }
+
     /**
      * Méthode magique qui permet d'hydrater notre objet 'patient' avec la connexion PDO
      * 
@@ -61,12 +72,13 @@ class Appointment
     {
 
         try {
-            $sql = 'INSERT INTO `appointments` (`dateHour`, `idPatient`) 
-                    VALUES (:dateHour, :idPatients)';
+            $sql = 'INSERT INTO `appointments` (`dateHour`, `idPatient`, `idDoctor`) 
+                    VALUES (:dateHour, :idPatients, :idDoctor)';
             $sth = $this->pdo->prepare($sql);
 
             $sth->bindValue(':dateHour', $this->getDateHour(), PDO::PARAM_STR);
             $sth->bindValue(':idPatients', $this->getIdPatients(), PDO::PARAM_INT);
+            $sth->bindValue(':idDoctor', $this->getIdDoctor(), PDO::PARAM_INT);
             return $sth->execute();
         } catch (PDOException $ex) {
             // var_dump($ex);
@@ -137,6 +149,7 @@ class Appointment
             return false;
         }
     }
+
     /**
      * Méthode qui permet de lister tous les rdv et leur patient
      * 
@@ -156,6 +169,36 @@ class Appointment
                         ;';
             $sth = $pdo->query($sql);
 
+            if ($sth === false) {
+                return [];
+            } else {
+                return $sth->fetchAll();
+            }
+        } catch (PDOException $ex) {
+            // var_dump($ex);
+            // On retourne false si une exception est levée
+            return [];
+        }
+    }
+
+
+    /**
+     * Méthode qui permet de lister les deux prochains rendez-vous
+     * 
+     * @return array
+     */
+    public static function getTwice()
+    {
+
+        $pdo = Database::getInstance();
+
+        try {
+            $sql = 'SELECT * FROM `appointments` 
+                    INNER JOIN `patients`
+                    ON `appointments`.`idPatient` = `patients`.`id`
+                    ORDER BY `appointments`.`dateHour` DESC
+                    LIMIT 2;';
+            $sth = $pdo->query($sql);
             if ($sth === false) {
                 return [];
             } else {

@@ -210,20 +210,47 @@ class Patient
         }
     }
 
+        /**
+     * Liste tous les patients existants
+     * 
+     * @return array
+     */
+    public static function getCountAll($search)
+    {
+        try {
+            // On stocke une instance de la classe PDO dans une variable
+            $pdo = Database::getInstance();
+
+            // On créé la requête
+            $sql = 'SELECT COUNT(*) AS `count` FROM `patients` WHERE `patients`.`lastname` LIKE :search;';
+
+            // On exécute la requête
+            $sth = $pdo->prepare($sql);
+            $sth->bindValue(':search', '%' . $search . '%',PDO::PARAM_STR);
+            $sth->execute();    
+            return $sth->fetch(PDO::FETCH_OBJ);
+
+        } catch (PDOException $ex) {
+            return [];
+        }
+    }
+
 
     /**
      * Liste tous les patients existants
      * 
      * @return array
      */
-    public static function getPerPage($premier, $perPage, $pointVirgule = ';')
+    public static function getPerPage($premier, $perPage, $search, $pointVirgule = ';')
     {
         try {
             // var_dump($premier, $perPage);die;
             // On stocke une instance de la classe PDO dans une variable
+            $search = $search ?? '';
             $pdo = Database::getInstance();
             // On créé la requête
             $sql = "SELECT * FROM `patients`
+                    WHERE((`lastname` LIKE :search) OR (`firstname` LIKE :search) OR (`mail` LIKE :search))
                     LIMIT :premier, :perPage
                     $pointVirgule";     
 
@@ -232,6 +259,7 @@ class Patient
             // On affecte chaque valeur à chaque marqueur nominatif
             $sth->bindValue(':premier', $premier, PDO::PARAM_INT);
             $sth->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+            $sth->bindValue(':search', '%' . $search . '%',PDO::PARAM_STR);
             if($sth->execute()){
             return $sth->fetchAll(PDO::FETCH_OBJ);
             } else return false;
@@ -343,57 +371,7 @@ class Patient
         }
     }
 
-    public function getCountOfAnnouncements($type, $category, $search){
-        try {
-            if(!empty($type) || !empty($category) || !empty($search)){
-                $conditions = null;
-                if(!empty($type)){
-                    $conditions = array();
-                    array_push($conditions, "`id_type_of_announcement` = :type");
-                }
-                if(!empty($category)){
-                    $conditions ? '' : $conditions = array();
-                    array_push($conditions, "`id_category` = :category");
-                }
-                if(!empty($conditions)){
-                    $conditions = ' WHERE ' . implode(' AND ', $conditions);
-                }
-                if(!empty($search)){
-                    $searchVal = ' AND `announcements`.`announcement_description` LIKE :search;';
-                }
-            }
-
-            $conditions = $conditions ?? '';
-            $searchVal = $searchVal ?? '';
-            $pdo = Database::dbConnect();
-            $sql = "SELECT COUNT(*) AS nb_articles 
-                    FROM `announcements` 
-                    INNER JOIN `users` 
-                    ON `announcements`.`id_user` = `users`.`id_user`
-                    $conditions
-                    $searchVal";
-            $stmt = $pdo->prepare($sql);
-            if(!empty($type)){
-                $stmt->bindValue(':type', $type, PDO::PARAM_INT);
-            }
-            if(!empty($category)){
-                $stmt->bindValue(':category', $category, PDO::PARAM_INT);
-            }
-            if(!empty($search)){
-                $stmt->bindValue(':search', "%".$search."%", PDO::PARAM_STR);
-            }
-            if ($stmt->execute()) {
-                $result = $stmt->fetch(PDO::FETCH_OBJ);
-                return $result;
-            } else {
-                return false;
-            }
-        } catch (PDOException $e) {
-            echo 'erreur dans la requête' . $e->getMessage();
-        }
-    }
-
-
+    
     /**
      * Liste tous les patients depuis le champs de recherche
      * 
@@ -421,6 +399,80 @@ class Patient
             return [];
         }
     }
+
+    /**
+     * 
+     * Récupère le nombre patients blacklistés
+     * @param int $id
+     * @return mixed
+     */
+    public static function getCountBlackList() {
+
+        try {
+            // On stocke une instance de la classe PDO dans une variable
+            $pdo = Database::getInstance();
+
+            // On créé la requête
+            $sql = 'SELECT COUNT(*) AS `count` FROM `patients` WHERE `blacklist` = 1';
+
+            // On prépare la requête
+            $sth = $pdo->query($sql);
+
+            if ($sth->execute() === false) {
+                //Erreur générale
+                return false;
+            } else {
+                $count = $sth->fetch();
+                if ($count === false) {
+                    //Patient non trouvé
+                    return false;
+                } else {
+                    return $count;
+                }
+            }
+        } catch (\PDOException $ex) {
+            //var_dump($ex);
+            return false;
+        }
+    }
+
+
+    /**
+     * 
+     * Récupère tous les patients blacklistés
+     * @param int $id
+     * @return mixed
+     */
+    public static function getBlackList() {
+
+        try {
+            // On stocke une instance de la classe PDO dans une variable
+            $pdo = Database::getInstance();
+
+            // On créé la requête
+            $sql = 'SELECT * FROM `patients` WHERE `blacklist` = 1';
+
+            // On prépare la requête
+            $sth = $pdo->query($sql);
+
+            if ($sth->execute() === false) {
+                //Erreur générale
+                return false;
+            } else {
+                $patient = $sth->fetchAll();
+                if ($patient === false) {
+                    //Patient non trouvé
+                    return false;
+                } else {
+                    return $patient;
+                }
+            }
+        } catch (\PDOException $ex) {
+            //var_dump($ex);
+            return false;
+        }
+    }
+
     
 }
 

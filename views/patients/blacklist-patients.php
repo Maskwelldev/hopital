@@ -8,7 +8,7 @@
     </div>
 
 <?php } else { ?>
-    <h1 class="h2 mx-3 text-primary mb-3">Liste des patients</h1>
+    <h1 class="h2 mx-3 text-primary mb-3">Liste noire</h1>
 
     <?php
     if(SessionFlash::checkMessage()){

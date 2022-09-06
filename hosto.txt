@@ -1,0 +1,44 @@
+CREATE TABLE patients(
+   id INT AUTO_INCREMENT,
+   lastname VARCHAR(30)  NOT NULL,
+   firstname VARCHAR(30)  NOT NULL,
+   birthdate DATE NOT NULL,
+   phone VARCHAR(10) ,
+   mail VARCHAR(100) ,
+   bed INT,
+   blacklist INT,
+   PRIMARY KEY(id),
+   UNIQUE(phone),
+   UNIQUE(mail),
+   UNIQUE(bed)
+);
+
+CREATE TABLE specialities(
+   id INT AUTO_INCREMENT,
+   name VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id),
+   UNIQUE(name)
+);
+
+CREATE TABLE doctors(
+   id INT AUTO_INCREMENT,
+   lastname VARCHAR(30)  NOT NULL,
+   firstname VARCHAR(30)  NOT NULL,
+   mail VARCHAR(100)  NOT NULL,
+   phone VARCHAR(10)  NOT NULL,
+   id_1 INT NOT NULL,
+   PRIMARY KEY(id),
+   UNIQUE(mail),
+   UNIQUE(phone),
+   FOREIGN KEY(id_1) REFERENCES specialities(id)
+);
+
+CREATE TABLE appointments(
+   id INT AUTO_INCREMENT,
+   dateHour DATETIME NOT NULL,
+   id_1 INT NOT NULL,
+   id_2 INT NOT NULL,
+   PRIMARY KEY(id),
+   FOREIGN KEY(id_1) REFERENCES patients(id),
+   FOREIGN KEY(id_2) REFERENCES doctors(id)
+);

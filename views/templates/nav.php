@@ -41,10 +41,10 @@
                         <h6 class="collapse-header">Custom Components:</h6>
                         <a class="collapse-item" href="../../controllers/list-patientCtrl.php">Liste des patients</a>
                         <a class="collapse-item" href="../../controllers/add-patientCtrl.php">Ajouter un patient</a>
-                        <a class="collapse-item" href="../../controllers/add-patientCtrl.php">Liste noire</a>
+                        <a class="collapse-item" href="../../controllers/backlist-patientsCtrl.php">Liste noire</a>
                     </div>
                 </div>
-            </li>
+            </li>   
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -97,7 +97,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/controllers/list-doctorsCtrl.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Docteurs</span></a>
             </li>

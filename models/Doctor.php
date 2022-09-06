@@ -28,7 +28,7 @@ class Doctor
      * @return boolean
      */
 
-    public static function getCount()
+    public static function getCountAll()
     {
         try {
             $pdo = Database::getInstance();
@@ -41,6 +41,68 @@ class Doctor
         } catch (PDOException $ex) {
             //var_dump($ex);
             return false;
+        }
+    }
+
+
+    /**
+     * Liste tous les patients existants
+     * 
+     * @return array
+     */
+    public static function getAll()
+    {
+        try {
+            // On stocke une instance de la classe PDO dans une variable
+            $pdo = Database::getInstance();
+
+            // On créé la requête
+            $sql = 'SELECT * FROM `doctors`';
+
+            // On exécute la requête
+            $sth = $pdo->query($sql);
+
+            return $sth->fetchAll();
+
+        } catch (PDOException $ex) {
+            //var_dump($ex);
+            return [];
+        }
+    }
+
+/**
+     * Retourne le nombre de docteurs 
+     * 
+     * @param
+     * 
+     * @return boolean
+     */
+
+    public static function getPerPage($premier, $perPage, $pointVirgule = ';')
+    {
+        try {
+            // On stocke une instance de la classe PDO dans une variable
+            $search = $search ?? '';
+            $pdo = Database::getInstance();
+            // On créé la requête
+            $sql = "SELECT *
+                    FROM `doctors`
+                    INNER JOIN `specialities` ON `doctors`.`idSpeciality` = `specialities`.`id`
+                    LIMIT :premier, :perPage
+                    $pointVirgule";     
+
+            // On exécute la requête
+            $sth = $pdo->prepare($sql);
+            // On affecte chaque valeur à chaque marqueur nominatif
+            $sth->bindValue(':premier', $premier, PDO::PARAM_INT);
+            $sth->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+            if($sth->execute()){
+            return $sth->fetchAll(PDO::FETCH_OBJ);
+            } else return false;
+
+        } catch (PDOException $ex) {
+            //var_dump($ex);
+            return [];
         }
     }
 

@@ -2,10 +2,12 @@
 include(__DIR__ . '/../config/regexp.php');
 include(__DIR__ . '/../models/Patient.php');
 include(__DIR__ . '/../models/Appointment.php');
+include(__DIR__ . '/../models/Doctor.php');
 
 
 // Appel à la méthode statique permettant de récupérer tous les patients
 $allPatients = Patient::getAll();
+$allDoctors = Doctor::getAll();
 /*************************************************************/
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -45,6 +47,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if($idPatients==0){
         $errors['dateHour_error'] = 'Le champ est obligatoire';
     }
+    $idDoctor = intval(trim(filter_input(INPUT_POST, 'idDoctor', FILTER_SANITIZE_NUMBER_INT)));
+    //On test si le champ est vide
+    if($idDoctor==0){
+        $errors['dateHour_error'] = 'Le champ est obligatoire';
+    }
 
     // Si il n'y a pas d'erreurs, on enregistre un nouveau rdv.
     if(empty($errors) ){
@@ -52,6 +59,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $appointment = new Appointment();
         $appointment->setDateHour($dateHour);
         $appointment->setIdPatients($idPatients);
+        $appointment->setIdDoctor($idDoctor);
         
         // Si la réponse de la méthode save est false,
         // on stocke un message d'erreur à afficher dans la vue

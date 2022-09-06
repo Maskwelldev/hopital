@@ -15,7 +15,7 @@ if(isset($_GET['page']) && !empty($_GET['page'])){
     $currentPage = 1;
 }
 
-if($result = Patient::getCountAll($search)){
+if($result = Patient::getCountBlackList()){
     // var_dump($result->count);die;
 
 $nbArticles = $result->count;
@@ -28,8 +28,8 @@ $pages = ceil($nbArticles / $perPage);
 // Calcul du 1er article de la page
 $premier = ($currentPage * $perPage) - $perPage;
 // var_dump($premier);die;
-$results = Patient::getPerPage($premier, $perPage, $search);
-// var_dump($patient);die;	
+$results = Patient::getBlackList($premier, $perPage);
+// var_dump($results);die;	
 
 
 // if (isset($_POST['search']) && !empty($_POST['search'])) {
@@ -45,7 +45,7 @@ $results = Patient::getPerPage($premier, $perPage, $search);
 
 include(__DIR__ . '/../views/templates/header.php');
 include(__DIR__ . '/../views/templates/nav.php');
-include(__DIR__ . '/../views/patients/list-patients.php');
+include(__DIR__ . '/../views/patients/blacklist-patients.php');
 include(__DIR__ . '/../views/templates/footer.php');
 
 /*************************************************************/

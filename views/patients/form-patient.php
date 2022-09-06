@@ -15,7 +15,7 @@ if ($patient){
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-10">
-                <h1 class="text-primary mb-5"><?= (isset($id)) ? 'Modifier' : 'Ajouter'?> un patient</h1>
+                <h1 class="h2 text-primary mb-5"><?= (isset($id)) ? 'Modifier' : 'Ajouter'?> un patient</h1>
                 <!-- On peut ajouter un attribut 'novalidate' dans la balise form pour désactiver temporairement tous les required et pattern -->
                 <form class="mb-5" novalidate method="POST" action="<?=htmlspecialchars($_SERVER["PHP_SELF"])?>?id=<?=$id ?? ''?>">
                 

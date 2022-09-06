@@ -25,9 +25,9 @@
             <tr>
                 <th scope="col">Prénom</th>
                 <th scope="col">Nom</th>
-                <th scope="col">Date de naissance</th>
+                <th scope="col">Spécialité</th>
                 <th scope="col">Email</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Téléphone</th>
             </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@
             <tr>
                 <td><?=htmlentities($result->firstname)?></td>
                 <td><?=htmlentities($result->lastname)?></td>
-                <td><?=htmlentities(date('d.m.Y', strtotime($result->birthdate)))?></td>
+                <td><?=htmlentities($result->name)?></td>
                 <td><a href="mailto:<?=htmlentities($result->mail)?>"><?=htmlentities($result->mail)?></a></td>
                 <td>
                     <a href="/controllers/edit-patientCtrl.php?id=<?=htmlentities($result->id)?>"><i

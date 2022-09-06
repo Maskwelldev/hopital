@@ -37,7 +37,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Tableau de bord</h1>
-                        <a href="tel: +33644810747" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-phone fa-sm text-white-50"></i> Appeler la sécurité</a>
+                        <a href="tel:+33644810747" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-phone fa-sm text-white-50"></i> Appeler la sécurité</a>
                     </div>
 
                     <!-- Content Row -->
@@ -54,7 +54,7 @@
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $countDoctors->count ?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                            <i class="hoverIcn fas fa-users fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -113,11 +113,11 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Mails en attente de réponse</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">127</div>
+                                                Dossiers à clôturer</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            <i class="fas fa-folder fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -152,24 +152,17 @@
                                 <div class="card-body">
                                     <div class="chart-area">
                                         <!-- <canvas id="myAreaChart"></canvas> -->
+                                        <?php foreach ($appointmentsTwice as $appointment) { ?>
                                         <div class="card" style="">
                                             <div class="card-body">
-                                                <h5 class="card-title">Mme Suarez</h5>
+                                                <h5 class="card-title"><?=$appointment->lastname . ' ' . $appointment->firstname ?></h5>
                                                 <h6 class="card-subtitle mb-2 text-muted">Dr. Mallard</h6>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                                <a href="#" class="card-link">Modifier patient</a>
-                                                <a href="#" class="card-link">Ordonnance</a>
+                                                <p class="card-text"><?=$appointment->dateHour?></p>
+                                                <a href="/controllers/edit-appointmentCtrl.php?id=<?= $appointment->id ?>" class="card-link">Modifier patient</a>
+                                                <a href="tel:<?=$appointment->phone?>" class="card-link">Appeler</a>
                                             </div>
                                         </div>
-                                        <div class="card" style="">
-                                            <div class="card-body">
-                                                <h5 class="card-title">M. Fenec</h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">Dr. Maboule</h6>
-                                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                                <a href="#" class="card-link">Card link</a>
-                                                <a href="#" class="card-link">Another link</a>
-                                            </div>
-                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +173,7 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Disponibilités</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Disponibilité des lits</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -201,13 +194,13 @@
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
+                                            <i class="fas fa-circle text-danger"></i> Occupés
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
+                                            <i class="fas fa-circle text-warning"></i> Prêtés
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
+                                            <i class="fas fa-circle text-success"></i> Disponibles
                                         </span>
                                     </div>
                                 </div>
