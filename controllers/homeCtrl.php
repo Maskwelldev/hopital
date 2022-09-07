@@ -2,10 +2,12 @@
 include(__DIR__ . '/../models/Patient.php');
 include(__DIR__ . '/../models/Doctor.php');
 include(__DIR__ . '/../models/Appointment.php');
-
+$who = 'patient, docteur';
 $countPatients = Patient::getCount();
 $countDoctors = Doctor::getCountAll();
 $appointmentsTwice = Appointment::getTwice();
+
+
 
 
 /* ************* AFFICHAGE DES VUES **************************/

@@ -83,14 +83,13 @@
                         <h6 class="collapse-header">Serveur mail:</h6>
                         <a class="collapse-item" href="/controllers/mailboxCtrl.php">Boite de réception</a>
                         <a class="collapse-item" href="login.html">Envoyer un mail</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/controllers/numbersCtrl.php">
                     <i class="fas fa-fw fa-info"></i>
                     <span>Numéros utiles</span></a>
             </li>

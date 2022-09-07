@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../helpers/SessionFlash.php');
 require_once(__DIR__ . '/../models/Patient.php');
+$who = 'patient blacklisté';
 
 // Appel à la méthode statique permettant de récupérer tous les patients
 if (isset($_POST['search']) && !empty($_POST['search'])) {

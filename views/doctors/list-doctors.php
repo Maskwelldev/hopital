@@ -23,8 +23,8 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Prénom</th>
                 <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
                 <th scope="col">Spécialité</th>
                 <th scope="col">Email</th>
                 <th scope="col">Téléphone</th>
@@ -36,14 +36,14 @@
         foreach($results as $result) {
             ?>
             <tr>
-                <td><?=htmlentities($result->lname)?></td>
                 <td><?=htmlentities($result->fname)?></td>
-                <td><?=htmlentities($result->name)?></td>
+                <td><?=htmlentities($result->lname)?></td>
+                <td><?=htmlentities($result->service_name)?></td>
                 <td><a href="mailto:<?=htmlentities($result->mail)?>"><?=htmlentities($result->mail)?></a></td>
                 <td><a href="tel:<?=htmlentities($result->phone)?>"><?=htmlentities($result->phone)?></td>
                 <td>
                     <a href="/controllers/edit-patientCtrl.php?id=<?=htmlentities($result->id)?>"><i
-                            class="far fa-edit"></i></a>
+                            class="far fa-edit mr-3"></i></a>
                     <a href="/controllers/delete-patientCtrl.php?id=<?=$result->id?>"><i class="fas fa-trash fs-5"></i></a>
                 </td>
             </tr>

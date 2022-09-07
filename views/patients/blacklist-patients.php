@@ -8,7 +8,7 @@
     </div>
 
 <?php } else { ?>
-    <h1 class="h2 text-primary mb-3">Liste noire</h1>
+    <h1 class="h2 text-primary mb-3">Liste noire <i class="fa fa-exclamation-triangle"></i></h1>
 
     <?php
     if(SessionFlash::checkMessage()){
@@ -20,11 +20,11 @@
     <?php } ?>
 
     
-    <table class="px-auto table table-striped table-dark">
+    <table class="px-auto table table-striped">
         <thead>
             <tr>
-                <th scope="col">Prénom</th>
                 <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
                 <th scope="col">Date de naissance</th>
                 <th scope="col">Email</th>
                 <th scope="col">Actions</th>
@@ -36,8 +36,8 @@
         foreach($results as $result) {
             ?>
             <tr>
-                <td><?=htmlentities($result->firstname)?></td>
                 <td><?=htmlentities($result->lastname)?></td>
+                <td><?=htmlentities($result->firstname)?></td>
                 <td><?=htmlentities(date('d.m.Y', strtotime($result->birthdate)))?></td>
                 <td><a href="mailto:<?=htmlentities($result->mail)?>"><?=htmlentities($result->mail)?></a></td>
                 <td>

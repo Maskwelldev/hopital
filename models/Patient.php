@@ -251,6 +251,7 @@ class Patient
             // On créé la requête
             $sql = "SELECT * FROM `patients`
                     WHERE((`lastname` LIKE :search) OR (`firstname` LIKE :search) OR (`mail` LIKE :search))
+                    ORDER BY `lastname` ASC
                     LIMIT :premier, :perPage
                     $pointVirgule";     
 

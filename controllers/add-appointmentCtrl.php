@@ -3,6 +3,7 @@ include(__DIR__ . '/../config/regexp.php');
 include(__DIR__ . '/../models/Patient.php');
 include(__DIR__ . '/../models/Appointment.php');
 include(__DIR__ . '/../models/Doctor.php');
+$who = 'rendez-vous';
 
 
 // Appel à la méthode statique permettant de récupérer tous les patients

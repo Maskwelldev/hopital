@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . '/../config/regexp.php');
 require_once(__DIR__ . '/../models/Patient.php');
-
+$who = 'patient';
 $patient = true;
 //On ne controle que s'il y a des données envoyées 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -101,7 +101,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $response = $patient->insert();
 
         if($response){
-            $errorsArray['global'] = 'Le patient a bien été ajouté';
+            // var_dump(true);die;
+            $errors['global'] = 'Le patient a bien été ajouté';
         }
     }
     /*************************************************************/

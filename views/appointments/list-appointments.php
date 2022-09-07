@@ -37,10 +37,10 @@
                     <td><?= date('d.m.Y', strtotime($appointment->dateHour)) ?></td>
                     <td><?= date('H:i', strtotime($appointment->dateHour)) ?></td>
                     <td><?= htmlentities($appointment->lastname . ' ' . substr($appointment->firstname, 0, 1) . '.')?></td>
-                    <td><?= htmlentities($appointment->lname) ?></td>
-                    <td><?= htmlentities($appointment->name) ?></td>
+                    <td>Dr. <?= htmlentities($appointment->lname) ?></td>
+                    <td><?= htmlentities($appointment->service_name) ?></td>
                     <td class="text-center">
-                        <a href="/controllers/edit-appointmentCtrl.php?id=<?= $appointment->id ?>"><i class="fas fa-edit fs-5"></i></a>
+                        <a href="/controllers/edit-appointmentCtrl.php?id=<?= $appointment->id ?>"><i class="fas fa-edit fs-5 mr-3"></i></a>
                         <a href="/controllers/delete-appointmentCtrl.php?id=<?= $appointment->id?>"><i class="fas fa-trash fs-5"></i></a>
                     </td>
                 </tr>

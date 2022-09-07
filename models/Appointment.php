@@ -155,7 +155,7 @@ class Appointment
      * 
      * @return array
      */
-    public static function getAll(): array
+    public static function getAll()
     {
 
         $pdo = Database::getInstance();
@@ -181,6 +181,71 @@ class Appointment
         } catch (PDOException $ex) {
             // var_dump($ex);
             // On retourne false si une exception est levée
+            return [];
+        }
+    }
+
+       /**
+     * Liste tous les patients existants
+     * 
+     * @return array
+     */
+    public static function getCountAll($search)
+    {
+        try {
+            // On stocke une instance de la classe PDO dans une variable
+            $pdo = Database::getInstance();
+
+            // On créé la requête
+            $sql = 'SELECT COUNT(*) AS `count` FROM `appointments` WHERE `appointments`.`dateHour` LIKE :search;';
+
+            // On exécute la requête
+            $sth = $pdo->prepare($sql);
+            $sth->bindValue(':search', '%' . $search . '%',PDO::PARAM_STR);
+            $sth->execute();
+            return $sth->fetch(PDO::FETCH_OBJ);
+
+        } catch (PDOException $ex) {
+            return [];
+        }
+    }
+
+    /**
+     * Liste tous les rendez-vous existants
+     * 
+     * @return array
+     */
+    public static function getPerPage($premier, $perPage, $search, $pointVirgule = ';')
+    {
+        try {
+            // var_dump($premier, $perPage);die;
+            // On stocke une instance de la classe PDO dans une variable
+            $search = $search ?? '';
+            $pdo = Database::getInstance();
+            // On créé la requête
+            $sql = "SELECT * FROM `appointments` 
+                    INNER JOIN `patients`
+                    ON `appointments`.`idPatient` = `patients`.`id`
+                    INNER JOIN `doctors`
+                    ON `appointments`.`idDoctor` = `doctors`.`id`
+                    INNER JOIN `specialities`
+                    ON `doctors`.`idSpeciality` = `specialities`.`id`
+                    WHERE `firstname` LIKE :search
+                    LIMIT :premier, :perPage
+                    $pointVirgule";     
+
+            // On exécute la requête
+            $sth = $pdo->prepare($sql);
+            // On affecte chaque valeur à chaque marqueur nominatif
+            $sth->bindValue(':premier', $premier, PDO::PARAM_INT);
+            $sth->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+            $sth->bindValue(':search', '%' . $search . '%',PDO::PARAM_STR);
+            if($sth->execute()){
+            return $sth->fetchAll(PDO::FETCH_OBJ);
+            } else return false;
+
+        } catch (PDOException $ex) {
+            //var_dump($ex);
             return [];
         }
     }

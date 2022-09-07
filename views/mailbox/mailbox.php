@@ -169,8 +169,8 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header bg-blue">
+                                            <h4 class="text-primary modal-title"><i class="fa fa-envelope"></i> Nouveau message</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title"><i class="fa fa-envelope"></i> Compose New Message</h4>
                                         </div>
                                         <form action="#" method="post">
                                             <div class="modal-body">

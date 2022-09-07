@@ -8,7 +8,7 @@
     </div>
 
 <?php } else { ?>
-    <h1 class="h2 text-primary mb-3">Liste des patients</h1>
+    <h1 class="h2 text-primary mb-3">Numéros utiles</h1>
 
     <?php
     if(SessionFlash::checkMessage()){
@@ -23,30 +23,28 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Prénom</th>
-                <th scope="col">Date de naissance</th>
-                <th scope="col">Email</th>
+                <th scope="col">#</th>
+                <th scope="col">Service</th>
                 <th scope="col">Téléphone</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Email</th>
+                <!-- <th scope="col">Actions</th> -->
             </tr>
         </thead>
         <tbody>
 
         <?php 
-        foreach($results as $result) {
+        foreach($services as $service) {
             ?>
             <tr>
-                <td><?=htmlentities(substr($result->lastname, 0, 14))?></td>
-                <td><?=htmlentities($result->firstname)?></td>
-                <td><?=htmlentities(date('d.m.Y', strtotime($result->birthdate)))?></td>
-                <td><a href="mailto:<?=htmlentities($result->mail)?>"><?=htmlentities($result->mail)?></a></td>
-                <td><a href="mailto:<?=htmlentities($result->phone)?>"><?=htmlentities($result->phone)?></a></td>
-                <td>
-                    <a href="/controllers/edit-patientCtrl.php?id=<?=htmlentities($result->id)?>"><i
+                <td><?=htmlentities($service->id)?></td>
+                <td><?=htmlentities($service->service_name)?></td>
+                <td><a href="tel:<?=htmlentities($service->service_phone)?>"><?=htmlentities($service->service_phone)?></a></td>
+                <td><a href="mailto:<?=htmlentities($service->service_mail)?>"><?=htmlentities($service->service_mail)?></a></td>
+                <!-- <td>
+                    <a href="/controllers/edit-patientCtrl.php?id=<?=htmlentities($service->id)?>"><i
                             class="far fa-edit mr-3"></i></a>
                     <a href="/controllers/delete-patientCtrl.php?id=<?=$result->id?>"><i class="fas fa-trash ml-3 fs-5"></i></a>
-                </td>
+                </td> -->
             </tr>
             <?php } ?>
 
