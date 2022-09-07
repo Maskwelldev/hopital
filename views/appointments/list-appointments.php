@@ -13,7 +13,7 @@
         </div>
         
     <?php } ?>
-
+    <div class="table-responsive">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -27,7 +27,6 @@
             </tr>
         </thead>
         <tbody>
-
             <?php
             $i = 0;
             foreach ($appointments as $appointment) {
@@ -49,6 +48,7 @@
 
         </tbody>
     </table>
+    </div>
 
 </div>
 <!-- End of Page Wrapper -->

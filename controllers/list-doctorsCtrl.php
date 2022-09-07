@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../helpers/SessionFlash.php');
 require_once(__DIR__ . '/../models/Doctor.php');
+$who = 'docteur';
 
 // Appel à la méthode statique permettant de récupérer tous les patients
 if (isset($_POST['search']) && !empty($_POST['search'])) {
@@ -27,7 +28,7 @@ $pages = ceil($nbArticles / $perPage);
 // Calcul du 1er article de la page
 $premier = ($currentPage * $perPage) - $perPage;
 // var_dump($premier);die;
-$results = Doctor::getPerPage($premier, $perPage);
+$results = Doctor::getPerPage($premier, $perPage, $search);
 
 
 // if (isset($_POST['search']) && !empty($_POST['search'])) {

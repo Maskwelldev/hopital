@@ -78,16 +78,22 @@ class Doctor
      * @return boolean
      */
 
-    public static function getPerPage($premier, $perPage, $pointVirgule = ';')
+    /**
+     * Liste tous les patients existants
+     * 
+     * @return array
+     */
+    public static function getPerPage($premier, $perPage, $search, $pointVirgule = ';')
     {
         try {
+            // var_dump($premier, $perPage);die;
             // On stocke une instance de la classe PDO dans une variable
             $search = $search ?? '';
             $pdo = Database::getInstance();
             // On créé la requête
-            $sql = "SELECT *
-                    FROM `doctors`
+            $sql = "SELECT * FROM `doctors`
                     INNER JOIN `specialities` ON `doctors`.`idSpeciality` = `specialities`.`id`
+                    WHERE((`lname` LIKE :search) OR (`fname` LIKE :search) OR (`mail` LIKE :search))
                     LIMIT :premier, :perPage
                     $pointVirgule";     
 
@@ -96,7 +102,9 @@ class Doctor
             // On affecte chaque valeur à chaque marqueur nominatif
             $sth->bindValue(':premier', $premier, PDO::PARAM_INT);
             $sth->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+            $sth->bindValue(':search', '%' . $search . '%',PDO::PARAM_STR);
             if($sth->execute()){
+                // var_dump($sth->fetchAll(PDO::FETCH_OBJ));die;
             return $sth->fetchAll(PDO::FETCH_OBJ);
             } else return false;
 

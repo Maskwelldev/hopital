@@ -81,7 +81,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Serveur mail:</h6>
-                        <a class="collapse-item" href="register.html">Boite de réception</a>
+                        <a class="collapse-item" href="/controllers/mailboxCtrl.php">Boite de réception</a>
                         <a class="collapse-item" href="login.html">Envoyer un mail</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                     </div>
@@ -128,7 +128,7 @@
 <!-- Topbar Search -->
 <form action="" method="post" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
     <div class="input-group">
-        <input name="search" type="text" class="form-control bg-light border-0 small" value="<?=$search ?? '' ?>" placeholder="Chercher un patient..."
+        <input name="search" type="text" class="form-control bg-light border-0 small" value="<?=$search ?? '' ?>" placeholder="Chercher un <?=$who?>..."
             aria-label="Search" aria-describedby="basic-addon2">
         <div class="input-group-append">
             <button class="btn btn-primary" type="submit">
@@ -284,7 +284,7 @@
     <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Batman</span>
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Maskwell</span>
             <img class="img-profile rounded-circle" src="/img/téléchargement.png">
         </a>
         <!-- Dropdown - User Information -->
